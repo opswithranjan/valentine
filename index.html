@@ -29,32 +29,37 @@
       min-height: 100svh;
       display: grid;
       place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 25%, #ff9ebc 50%, #ffc8dd 75%, #ffe0f0 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
       font-family: 'Quicksand', system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
       position: relative;
     }
 
-    /* Photo grid background */
-    .photo-bg {
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Soft floating background hearts (CSS only) */
+    .bg-hearts {
       position: fixed;
       inset: 0;
       z-index: 0;
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(6, 1fr);
       pointer-events: none;
-      opacity: 0.9;
-      filter: none;
-      transition: opacity 0.4s, filter 0.4s;
+      overflow: hidden;
     }
-    .photo-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 4px;
-      box-shadow: 0 1px 4px #fff6f9;
+    .bg-heart {
+      position: absolute;
+      opacity: 0.15;
+      animation: bgFloat linear infinite;
+    }
+    @keyframes bgFloat {
+      0% { transform: translateY(100vh) rotate(0deg) scale(1); }
+      100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); }
     }
 
     /* Floating hearts animation */
@@ -181,13 +186,6 @@
         padding: 8px;
       }
 
-      .photo-bg {
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(8, 1fr);
-        opacity: 0.85;
-        filter: none;
-      }
-
       .card {
         width: 96vw;
         padding: 18px 14px;
@@ -265,54 +263,8 @@
 </head>
 
 <body>
-  <div class="photo-bg">
-    <img src="images/photo1.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo2.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo3.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo4.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo5.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo6.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo7.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo8.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo9.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo10.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo11.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo12.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo13.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo1.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo2.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo3.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo4.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo5.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo6.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo7.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo8.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo9.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo10.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo11.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo12.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo13.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo1.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo2.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo3.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo4.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo5.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo6.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo7.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo8.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo9.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo10.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo11.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo12.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo13.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo1.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo2.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo3.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo4.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo5.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo6.JPG" alt="" loading="eager" decoding="async" />
-    <img src="images/photo7.JPG" alt="" loading="eager" decoding="async" />
-  </div>
+  <!-- Romantic floating background hearts -->
+  <div class="bg-hearts" id="bgHearts"></div>
   <canvas id="confettiCanvas"></canvas>
   <!-- Floating hearts container -->
   <div id="heartsContainer" style="position:fixed;inset:0;z-index:10001;pointer-events:none;"></div>
@@ -388,6 +340,25 @@
   </main>
 
   <script>
+    // Generate romantic background hearts
+    (function() {
+      const bgHearts = document.getElementById('bgHearts');
+      const heartChars = ['❤', '♥', '💕', '💗', '💖', '🩷'];
+      const colors = ['#ff4d7d', '#ff7aa2', '#ffb6c1', '#ff1f68', '#ff6b9d', '#e8506a'];
+      for (let i = 0; i < 25; i++) {
+        const h = document.createElement('span');
+        h.className = 'bg-heart';
+        h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+        h.style.left = Math.random() * 100 + '%';
+        h.style.fontSize = (20 + Math.random() * 50) + 'px';
+        h.style.color = colors[Math.floor(Math.random() * colors.length)];
+        h.style.animationDuration = (6 + Math.random() * 10) + 's';
+        h.style.animationDelay = -(Math.random() * 16) + 's';
+        h.style.opacity = 0.08 + Math.random() * 0.15;
+        bgHearts.appendChild(h);
+      }
+    })();
+
     const zone = document.getElementById("zone");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
