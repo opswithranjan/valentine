@@ -195,7 +195,7 @@
       font-size: 22px;
       cursor: pointer;
       box-shadow: 0 4px 16px rgba(255,59,122,0.4);
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       animation: pulse 2s ease-in-out infinite;
@@ -362,7 +362,7 @@
       <div style="font-size: 22px; margin-bottom: 12px; color: #ff3b7a;">
         My heart is yours forever! 💖<br>
         You make every day feel magical.<br>
-        Happy Valentine’s Day, Chinu! 🥰
+        Happy Valentine’s Week, Chinu! 🥰
       </div>
       <div style="margin: 0 auto; width: 100%; max-width: 320px;">
         <svg width="100%" height="80" viewBox="0 0 320 80">
@@ -393,15 +393,6 @@
     }
 
     musicBtn.addEventListener('click', toggleMusic);
-
-    // Try to autoplay
-    bgMusic.play().then(() => {
-      musicPlaying = true;
-      musicBtn.textContent = '⏸️';
-      musicBtn.classList.add('playing');
-    }).catch(() => {
-      // Autoplay blocked — user needs to tap the button
-    });
 
     // Generate romantic background hearts
     (function() {
@@ -568,14 +559,20 @@
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
       startHearts();
-      // Hide question everywhere
+      // Hide question
       const question = document.getElementById("question");
       if (question) question.style.display = "none";
+      // Start music
+      bgMusic.play();
+      musicPlaying = true;
+      musicBtn.textContent = '⏸️';
+      musicBtn.classList.add('playing');
+      musicBtn.style.display = 'flex';
     });
   </script>
 </body>
