@@ -180,6 +180,34 @@
       to { transform: scale(1); opacity: 1; }
     }
 
+    /* Music button */
+    .music-btn {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 10002;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: var(--yes);
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(255,59,122,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .music-btn.playing {
+      animation: none;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
     /* ========== MOBILE OPTIMIZATIONS ========== */
     @media (max-width: 768px) {
       body {
@@ -263,6 +291,12 @@
 </head>
 
 <body>
+  <!-- Background music -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+  <button class="music-btn" id="musicBtn" aria-label="Play/Pause music">🎵</button>
+
   <!-- Romantic floating background hearts -->
   <div class="bg-hearts" id="bgHearts"></div>
   <canvas id="confettiCanvas"></canvas>
@@ -340,6 +374,35 @@
   </main>
 
   <script>
+    // Music control
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    let musicPlaying = false;
+
+    function toggleMusic() {
+      if (musicPlaying) {
+        bgMusic.pause();
+        musicBtn.textContent = '🎵';
+        musicBtn.classList.remove('playing');
+      } else {
+        bgMusic.play();
+        musicBtn.textContent = '⏸️';
+        musicBtn.classList.add('playing');
+      }
+      musicPlaying = !musicPlaying;
+    }
+
+    musicBtn.addEventListener('click', toggleMusic);
+
+    // Try to autoplay
+    bgMusic.play().then(() => {
+      musicPlaying = true;
+      musicBtn.textContent = '⏸️';
+      musicBtn.classList.add('playing');
+    }).catch(() => {
+      // Autoplay blocked — user needs to tap the button
+    });
+
     // Generate romantic background hearts
     (function() {
       const bgHearts = document.getElementById('bgHearts');
